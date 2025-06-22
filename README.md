@@ -54,6 +54,11 @@ RabbitMQ · Redis · FAISS · Hugging Face Models
 React (Flow) + Tailwind · Prometheus · Grafana · ELK/Loki  
 
 ---
+### 1. Create your `.env`
+
+```bash
+cp .env.example .env
+# edit `.env` and paste real credentials
 
 ## Quick Start
 
