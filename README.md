@@ -1,116 +1,73 @@
-# Business Process Automation Platform
+# Bella • Office Orchestrator 🤖📁
 
-A Streamlit-based application that automates various business processes including PR reviews, CI/CD deployments, release notes generation, and data refresh operations.
+A natural-language driven AI assistant that turns plain-English requests into fully-automated business workflows—handling everything from Slack notifications and GitHub deployments to database refreshes and ticket triage.
 
-## Features
+---
 
-1. **PR Reviewer Round-Robin**
-   - Automatically assigns PR reviewers based on team roster
-   - Ensures fair load balancing
-   - Sends notifications via Slack
-   - Tracks review history
+## Key Features
 
-2. **CI/CD Auto-Deploy**
-   - Monitors GitHub Actions
-   - Automatically deploys to staging/production
-   - Handles rollbacks
-   - Provides deployment status updates
+| Category | What Bella Automates |
+| -------- | -------------------- |
+| **Collaboration & Scheduling** | Find common free slots, create calendar events, post confirmations |
+| **People-Ops** | End-to-end onboarding / off-boarding with account provisioning & token revocation |
+| **Dev Ops / CI • CD** | One-click image builds, Kubernetes roll-outs, safe rollbacks |
+| **Data Engineering** | Hourly API pulls, parquet ⇢ S3, dependency-drift alerts, CSV exports |
+| **Support & IT** | Ticket auto-assignment, urgent-complaint routing, daily office summaries |
+| **Team Productivity** | Chat noise digests, task-log reminders, PR reviewer round-robin |
 
-3. **Release Notes Generator**
-   - Fetches merged PRs since last release
-   - Uses AI to categorize changes
-   - Posts formatted changelog to Slack
-   - Maintains release history
+---
 
-4. **Data Refresh & Dependency Check**
-   - Hourly HubSpot data refresh
-   - Weekly dependency checks
-   - Vulnerability scanning
-   - Automated Jira ticket creation
+## Twelve Built-in Workflows  :contentReference[oaicite:0]{index=0}
 
-## Setup
+1. **Find Common Free Slot & Schedule Meeting** – zero e-mail ping-pong; timezone math handled for you.  
+2. **Onboarding / Off-boarding** – consistent Day-1 experience and no orphan accounts.  
+3. **PR Reviewer Round-Robin** – fair code-review load-balancing (< 24 h SLA).  
+4. **Simple Data Pre-Processing** – one-shot SQL ⇢ clean CSV URL, no Excel drudgery.  
+5. **Task-Log Reminders & Manager Reports** – automated daily nudges + PDF/CSV roll-up.  
+6. **CI / CD Auto-Deploy on Merge-to-Main** – image build, cluster upgrade, health-check & rollback.  
+7. **Chat Noise Filter & Smart Digest** – 30-second channel summary for 100+ messages.  
+8. **Ticket Auto-Assignment (Urgent Complaints)** – sub-5-minute first response, no manual triage.  
+9. **End-of-Day Office Log Summariser** – sensors ⇢ LLM summary ⇢ PDF + Slack post.  
+10. **Database Refresh / Delete with Approval** – snapshot, wipe, restore seed, audit trail.  
+11. **GitHub → Slack Release Notes** – tag-triggered changelog grouped by feature/bug.  
+12. **Data Refresh & Dependency Drift Alert** – hourly data pulls and Monday CVE checks.
 
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd <repository-name>
-   ```
+---
 
-2. Create a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+## How It Works
 
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+1. **NL Parser** (LangChain + Pydantic) → converts chat text to JSON task-specs  
+2. **Prefect-style DAG Engine** → builds & schedules flows dynamically  
+3. **Connector Layer** (Slack, Jira, GitHub, Google, DB) → executes atomic steps  
+4. **Observability** – Prometheus / Grafana, OpenTelemetry, Jaeger traces  
+5. **Secrets & Config** – Vault + `.env` (never committed thanks to `.gitignore`)  
 
-4. Create a `.env` file with the following variables:
-   ```
-   # OpenAI Configuration
-   OPENAI_API_KEY=your_openai_api_key
+*Full architecture diagram:* <https://lucid.app/lucidspark/3b128df3-6f6b-480b-8581-4f03a60eb3e4>
 
-   # GitHub Configuration
-   GITHUB_TOKEN=your_github_token
-   GITHUB_REPO=your_repo_name
-   GITHUB_OWNER=your_github_username
+---
 
-   # Slack Configuration
-   SLACK_BOT_TOKEN=your_slack_bot_token
-   SLACK_CHANNEL_ID=your_channel_id
+## Tech Stack
 
-   # AWS Configuration
-   AWS_ACCESS_KEY_ID=your_aws_access_key
-   AWS_SECRET_ACCESS_KEY=your_aws_secret_key
-   AWS_REGION=your_aws_region
-   S3_BUCKET=your_bucket_name
+Python · FastAPI · Prefect · LangChain    
+SQLite / PostgreSQL · Docker · Kubernetes · GitHub Actions · ArgoCD    
+RabbitMQ · Redis · FAISS · Hugging Face Models    
+React (Flow) + Tailwind · Prometheus · Grafana · ELK/Loki  
 
-   # HubSpot Configuration
-   HUBSPOT_API_KEY=your_hubspot_api_key
+---
 
-   # Jira Configuration
-   JIRA_API_TOKEN=your_jira_token
-   JIRA_EMAIL=your_jira_email
-   JIRA_URL=your_jira_url
-   ```
+## Quick Start
 
-5. Run the application:
-   ```bash
-   streamlit run app.py
-   ```
+```bash
+# clone the repo
+git clone https://github.com/harshadayini/Bella-Office-Orchestrator.git
+cd Bella-Office-Orchestrator
 
-## Usage
+# create env, install deps
+python3 -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
 
-1. **PR Reviewer**
-   - Add team members in the interface
-   - Enter PR number and author
-   - System will automatically assign reviewers
+# copy secrets template & fill values
+cp .env.example .env          # NEVER commit real creds!
 
-2. **CI/CD Deployer**
-   - Monitor deployment status
-   - Trigger manual deployments
-   - Handle rollbacks if needed
-
-3. **Release Notes**
-   - Generate release notes for new versions
-   - View previous releases
-   - Get AI-categorized changes
-
-4. **Data Refresh**
-   - Trigger manual data refresh
-   - Check dependency updates
-   - View refresh history
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details. 
+# launch the Streamlit UI
+streamlit run app.py
